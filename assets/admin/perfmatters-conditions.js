@@ -59,10 +59,10 @@ jQuery(function ($) {
 		var html = ''
 			+ '<div id="sapfp-condition-logic">'
 			+ '<div class="sapfp-logic-header">'
-			+ '<h4>' + escapeHtml(strings.panelTitle || 'Condition logic') + '</h4>'
+			+ '<h4>' + escapeHtml(strings.panelTitle || 'Condition Logic') + '</h4>'
 			+ '<p>' + escapeHtml(strings.panelDescription || '') + '</p>'
 			+ '</div>'
-			+ '<div class="sapfp-logic-grid" role="group" aria-label="' + escapeHtml(strings.panelTitle || 'Condition logic') + '">'
+			+ '<div class="sapfp-logic-grid" role="group" aria-label="' + escapeHtml(strings.panelTitle || 'Condition Logic') + '">'
 			+ '<div class="sapfp-logic-grid-head" aria-hidden="true">'
 			+ '<span class="sapfp-logic-grid-label"></span>'
 			+ '<span class="sapfp-logic-grid-col">' + escapeHtml(strings.orBadge || 'OR') + '</span>'
@@ -75,6 +75,7 @@ jQuery(function ($) {
 
 		$anchor.after(html);
 		syncHiddenInput();
+		syncButtonStates();
 		bindPanelEvents();
 		updateRowBadges();
 	}
@@ -96,12 +97,25 @@ jQuery(function ($) {
 
 	function tile(key, value, text) {
 		var id = 'sapfp-' + key + '-' + value;
-		var checked = state[key] === value ? ' checked' : '';
+		var checked = state[key] === value;
+		var btnClass = 'button button-small sapfp-logic-btn '
+			+ (checked ? 'button-primary' : 'button-secondary');
 
-		return '<label class="sapfp-logic-tile" for="' + id + '">'
-			+ '<input type="radio" id="' + id + '" name="sapfp_' + key + '" value="' + value + '"' + checked + ' />'
-			+ '<span class="sapfp-logic-tile-text">' + escapeHtml(text || value) + '</span>'
+		return '<label class="' + btnClass + '" for="' + id + '">'
+			+ '<input type="radio" class="sapfp-logic-radio" id="' + id + '" name="sapfp_' + key + '" value="' + value + '"' + (checked ? ' checked' : '') + ' />'
+			+ '<span class="sapfp-logic-btn-text">' + escapeHtml(text || value) + '</span>'
 			+ '</label>';
+	}
+
+	function syncButtonStates() {
+		$('#sapfp-condition-logic input[type="radio"]').each(function () {
+			var $input = $(this);
+			var $label = $('label[for="' + $input.attr('id') + '"]');
+			var isChecked = $input.prop('checked');
+
+			$label.toggleClass('button-primary', isChecked);
+			$label.toggleClass('button-secondary', !isChecked);
+		});
 	}
 
 	function bindPanelEvents() {
@@ -109,6 +123,7 @@ jQuery(function ($) {
 			var key = $(this).attr('name').replace('sapfp_', '');
 			state[key] = $(this).val();
 			syncHiddenInput();
+			syncButtonStates();
 			updateRowBadges();
 		});
 	}

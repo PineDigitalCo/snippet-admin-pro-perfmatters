@@ -13,7 +13,7 @@ Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code sn
 1. Install and activate the plugin.
 2. Go to **Settings → Perfmatters → Code → Snippets**.
 3. Select snippets using Perfmatters’ checkboxes (same as bulk Activate/Delete).
-4. Use **Change location to** in the bulk actions bar, pick a location, and click **Apply to selected**.
+4. Use **Change Location To** in the bulk actions bar, pick a location, and click **Apply to Selected**.
 
 The location dropdown only shows options Perfmatters supports for the **selected snippet types** (same rules as the single-snippet editor). Select snippets first; mixed types show only locations valid for all selected types.
 
@@ -21,14 +21,14 @@ The snippets table includes a **Location** column (after Type) showing where eac
 
 Supported locations match Perfmatters (e.g. Frontend Header, Frontend Footer, Admin Header, Admin Footer, plus PHP and HTML-specific options).
 
-### Condition logic (OR / AND)
+### Condition Logic (OR / AND)
 
-On a single snippet editor screen (**Settings → Perfmatters → Code → Snippets → open a snippet**), a **Condition logic** panel appears below Perfmatters’ Include / Exclude / Users sections:
+On a single snippet editor screen (**Settings → Perfmatters → Code → Snippets → open a snippet**), a **Condition Logic** panel appears below Perfmatters’ Include / Exclude / Users sections:
 
 | Setting | Default (Perfmatters-native) | Enhanced option |
 |--------|------------------------------|-----------------|
-| Include rules | Match **any** row (OR) | Match **all** rows (AND) |
-| Exclude rules | Exclude when **any** matches | Exclude only when **all** match |
+| Include Rules | Match **any** row (OR) | Match **all** rows (AND) |
+| Exclude Rules | Exclude when **any** matches | Exclude only when **all** match |
 | Include vs. users | **Both** sections required | **Either** section can enable the snippet |
 
 Logic settings are saved in the snippet’s `conditions` meta as a hidden `sapfp:logic` row (JSON in the exclude list). They survive plugin deactivation like any other snippet field.

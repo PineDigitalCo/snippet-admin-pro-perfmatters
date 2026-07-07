@@ -313,7 +313,7 @@
 		if (!types.length) {
 			var waitOption = document.createElement('option');
 			waitOption.value = '__none__';
-			waitOption.textContent = cfg.strings.selectSnippetsFirst || 'Select snippets to see locations';
+			waitOption.textContent = cfg.strings.selectSnippetsFirst || 'Select Snippets to See Locations';
 			select.appendChild(waitOption);
 			select.disabled = true;
 			return;
@@ -324,7 +324,7 @@
 		if (!options.length) {
 			var emptyOption = document.createElement('option');
 			emptyOption.value = '__none__';
-			emptyOption.textContent = cfg.strings.noCommonLocations || 'No common locations for selected types';
+			emptyOption.textContent = cfg.strings.noCommonLocations || 'No Common Locations for Selected Types';
 			select.appendChild(emptyOption);
 			select.disabled = true;
 			return;
@@ -332,7 +332,7 @@
 
 		var placeholder = document.createElement('option');
 		placeholder.value = '__none__';
-		placeholder.textContent = cfg.strings.selectLocation || 'Select location…';
+		placeholder.textContent = cfg.strings.selectLocation || 'Select Location…';
 		select.appendChild(placeholder);
 
 		options.forEach(function (location) {
