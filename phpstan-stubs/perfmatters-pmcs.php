@@ -11,6 +11,21 @@ class PMCS {
 	public static function get_snippet_config( bool $cached = true ): array {
 		return [];
 	}
+
+	public static function normalize_snippet_file_name( $file_name ): string {
+		return '';
+	}
+
+	public static function get_storage_dir(): string {
+		return '';
+	}
+
+	/**
+	 * @return array<string, mixed>|false
+	 */
+	public static function build_snippet_config() {
+		return [];
+	}
 }
 
 class Snippet {

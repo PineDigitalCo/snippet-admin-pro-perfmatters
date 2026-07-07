@@ -25,6 +25,7 @@ final class PerfmattersSnippetsIntegration {
 		add_action( 'admin_enqueue_scripts', [ self::class, 'enqueue_assets' ] );
 		add_action( 'admin_footer', [ self::class, 'render_post_form' ] );
 		BulkLocationHandler::register();
+		BulkDuplicateHandler::register();
 	}
 
 	/**
@@ -88,6 +89,8 @@ final class PerfmattersSnippetsIntegration {
 					'selectSnippets'     => __( 'Select at least one snippet in the list below.', 'snippet-admin-pro-for-perfmatters' ),
 					'chooseLocation'     => __( 'Choose a location.', 'snippet-admin-pro-for-perfmatters' ),
 					'locationColumn'     => __( 'Location', 'snippet-admin-pro-for-perfmatters' ),
+					'duplicate'          => __( 'Duplicate', 'snippet-admin-pro-for-perfmatters' ),
+					'duplicateSelected'  => __( 'Duplicate Selected', 'snippet-admin-pro-for-perfmatters' ),
 				],
 			]
 		);
@@ -115,6 +118,15 @@ final class PerfmattersSnippetsIntegration {
 			<input type="hidden" name="redirect_search" value="<?php echo esc_attr( $search ); ?>" />
 			<input type="hidden" name="redirect_location_sort" id="sapfp-redirect-location-sort" value="<?php echo esc_attr( $location_sort ); ?>" />
 			<div id="sapfp-snippet-inputs"></div>
+		</form>
+		<form id="sapfp-bulk-duplicate-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" hidden>
+			<input type="hidden" name="action" value="<?php echo esc_attr( BulkDuplicateHandler::ACTION ); ?>" />
+			<?php wp_nonce_field( BulkDuplicateHandler::NONCE_ACTION ); ?>
+			<input type="hidden" name="redirect_status" value="<?php echo esc_attr( $status ); ?>" />
+			<input type="hidden" name="redirect_type" value="<?php echo esc_attr( $type ); ?>" />
+			<input type="hidden" name="redirect_search" value="<?php echo esc_attr( $search ); ?>" />
+			<input type="hidden" name="redirect_location_sort" value="<?php echo esc_attr( $location_sort ); ?>" />
+			<div id="sapfp-duplicate-inputs"></div>
 		</form>
 		<?php
 	}

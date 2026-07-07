@@ -16,6 +16,10 @@
 	max-width: 220px;
 }
 
+.sapfp-bulk-duplicate-button {
+	margin-right: 8px;
+}
+
 @media screen and (max-width: 782px) {
 	.sapfp-bulk-location-bar {
 		display: flex;

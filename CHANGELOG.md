@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2026-07-07
+
+### Added
+
+- **Snippet duplication** on the Perfmatters snippets list (row action and **Duplicate Selected** bulk button). Copies are inactive and persist in Perfmatters-native snippet files.
+
+### Changed
+
+- README documents all features equally with Title Case section headings.
+
 ## [0.4.0] - 2026-07-07
 
 ### Added
@@ -67,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial plugin scaffold with Perfmatters detection and Tools admin shell.
 - Development tooling: PHPStan, PHPCS, PHPUnit, distribution ZIP build.
 
+[0.4.1]: https://github.com/PineDigitalCo/snippet-admin-pro-perfmatters/releases/tag/v0.4.1
 [0.4.0]: https://github.com/PineDigitalCo/snippet-admin-pro-perfmatters/releases/tag/v0.4.0
 [0.3.3]: https://github.com/PineDigitalCo/snippet-admin-pro-perfmatters/releases/tag/v0.3.3
 [0.3.2]: https://github.com/PineDigitalCo/snippet-admin-pro-perfmatters/releases/tag/v0.3.2

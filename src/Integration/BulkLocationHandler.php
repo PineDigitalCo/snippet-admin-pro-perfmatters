@@ -155,7 +155,7 @@ final class BulkLocationHandler {
 	 *
 	 * @param string $redirect Target URL without notice args.
 	 */
-	private static function redirect_with_notice( string $redirect, string $type, string $message ): void {
+	public static function redirect_with_notice( string $redirect, string $type, string $message ): void {
 		$url = add_query_arg(
 			[
 				'sapfp_notice'  => $type,

@@ -12,6 +12,7 @@ Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code sn
 
 - **Location column** — See where each snippet runs at a glance in the snippets list (sortable).
 - **Bulk location editing** — Change the run location for multiple snippets at once from the bulk actions bar.
+- **Snippet duplication** — Duplicate one or many snippets from the list (row action or bulk button). Copies are created inactive with the same code, location, and conditions.
 - **Condition logic (OR / AND)** — Control how Include rules, Exclude rules, and user conditions combine on the single-snippet editor.
 
 ## Usage
@@ -31,6 +32,15 @@ Supported locations match Perfmatters (e.g. Frontend Header, Frontend Footer, Ad
 2. Use **Change Location To** in the bulk actions bar, pick a location, and click **Apply to Selected**.
 
 The location dropdown only shows options Perfmatters supports for the **selected snippet types** (same rules as the single-snippet editor). Select snippets first; mixed types show only locations valid for all selected types.
+
+### Snippets List — Snippet Duplication
+
+Duplicate snippets from the Perfmatters snippets list in two ways:
+
+1. **Row action** — Click **Duplicate** under a snippet name (next to Edit / Export / Delete).
+2. **Bulk button** — Select snippets, then click **Duplicate Selected** in the bulk actions bar.
+
+Duplicates are saved as **inactive** copies with the same code, location, conditions, tags, and other metadata. The copy name appends `Copy` (or `Copy 2`, `Copy 3`, etc. when duplicating an existing copy).
 
 ### Snippet Editor — Condition Logic (OR / AND)
 

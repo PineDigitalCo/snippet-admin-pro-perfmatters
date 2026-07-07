@@ -3,7 +3,7 @@
  * Plugin Name:       Snippet Admin Pro for Perfmatters
  * Plugin URI:        https://github.com/PineDigitalCo/snippet-admin-pro-perfmatters
  * Description:       Enhanced admin tools for managing Perfmatters code snippets.
- * Version:           0.4.0
+ * Version:           0.4.1
  * Author:            Pine Digital Co
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'SAPFP_VERSION' ) ) {
-	define( 'SAPFP_VERSION', '0.4.0' );
+	define( 'SAPFP_VERSION', '0.4.1' );
 }
 if ( ! defined( 'SAPFP_FILE' ) ) {
 	define( 'SAPFP_FILE', __FILE__ );

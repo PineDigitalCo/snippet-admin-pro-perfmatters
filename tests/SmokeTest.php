@@ -18,5 +18,6 @@ final class SmokeTest extends TestCase {
 	public function test_integration_classes_are_autoloaded(): void {
 		$this->assertTrue( class_exists( \SnippetAdminProForPerfmatters\Integration\PerfmattersSnippetsIntegration::class ) );
 		$this->assertTrue( class_exists( \SnippetAdminProForPerfmatters\Integration\BulkLocationHandler::class ) );
+		$this->assertTrue( class_exists( \SnippetAdminProForPerfmatters\Integration\BulkDuplicateHandler::class ) );
 	}
 }

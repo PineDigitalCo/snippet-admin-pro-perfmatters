@@ -146,4 +146,109 @@ final class SnippetService {
 
 		return $labels;
 	}
+
+	/**
+	 * Duplicate one snippet file (inactive copy with copied code and meta).
+	 *
+	 * @return string|\WP_Error New snippet file name on success.
+	 */
+	public static function duplicate( string $source_file_name ) {
+		if ( ! self::is_available() ) {
+			return new \WP_Error( 'sapfp_unavailable', 'Perfmatters PMCS is not available.' );
+		}
+
+		$source_file_name = PMCS::normalize_snippet_file_name( $source_file_name );
+
+		if ( $source_file_name === '' ) {
+			return new \WP_Error( 'sapfp_invalid_source', __( 'Invalid snippet file name.', 'snippet-admin-pro-for-perfmatters' ) );
+		}
+
+		$snippet = Snippet::get( $source_file_name );
+
+		if ( ! is_array( $snippet ) || ! array_key_exists( 'code', $snippet ) || ! is_array( $snippet['meta'] ?? null ) ) {
+			return new \WP_Error( 'sapfp_not_found', sprintf( 'Snippet not found: %s', $source_file_name ) );
+		}
+
+		$meta = $snippet['meta'];
+		unset( $meta['file_name'] );
+
+		$meta['name']    = SnippetDuplicate::display_name_for_copy( (string) ( $meta['name'] ?? '' ) );
+		$meta['active']  = '';
+		$meta['created'] = '';
+
+		$new_file_name = self::generate_unique_file_name( $meta['name'] );
+		$updated       = Snippet::update( $new_file_name, $snippet['code'], $meta );
+
+		if ( ! $updated ) {
+			return new \WP_Error( 'sapfp_duplicate_failed', sprintf( 'Could not duplicate snippet: %s', $source_file_name ) );
+		}
+
+		return $new_file_name;
+	}
+
+	/**
+	 * Duplicate multiple snippet files.
+	 *
+	 * @param list<string> $file_names Snippet file names.
+	 * @return array{duplicated: int, skipped: int, errors: list<string>, new_files: list<string>}
+	 */
+	public static function bulk_duplicate( array $file_names ): array {
+		$result = [
+			'duplicated' => 0,
+			'skipped'    => 0,
+			'errors'     => [],
+			'new_files'  => [],
+		];
+
+		foreach ( $file_names as $file_name ) {
+			$file_name = sanitize_file_name( (string) $file_name );
+
+			if ( $file_name === '' ) {
+				++$result['skipped'];
+				continue;
+			}
+
+			$duplicate = self::duplicate( $file_name );
+
+			if ( is_wp_error( $duplicate ) ) {
+				$result['errors'][] = $duplicate->get_error_message();
+				++$result['skipped'];
+				continue;
+			}
+
+			$result['new_files'][] = (string) $duplicate;
+			++$result['duplicated'];
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Generate a unique snippet file name in Perfmatters storage.
+	 */
+	public static function generate_unique_file_name( string $display_name ): string {
+		$storage_dir = PMCS::get_storage_dir();
+		$file_count  = count( glob( $storage_dir . '/*.php' ) ?: [] );
+
+		if ( $file_count === 0 ) {
+			PMCS::build_snippet_config();
+			$file_count = count( glob( $storage_dir . '/*.php' ) ?: [] );
+		}
+
+		if ( $file_count === 0 ) {
+			$file_count = 1;
+		}
+
+		$file_title = SnippetDuplicate::file_title_from_display_name( $display_name );
+
+		for ( $offset = 0; $offset < 100; ++$offset ) {
+			$candidate = sanitize_file_name( ( $file_count + $offset ) . '-' . $file_title . '.php' );
+
+			if ( $candidate !== '' && ! is_file( $storage_dir . '/' . $candidate ) ) {
+				return $candidate;
+			}
+		}
+
+		return sanitize_file_name( uniqid( (string) $file_count . '-', false ) . '.php' );
+	}
 }

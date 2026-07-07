@@ -8,6 +8,8 @@
 
 	injectLocationColumn(config);
 	injectBulkLocationBar(config);
+	injectBulkDuplicateButton(config);
+	injectDuplicateRowActions(config);
 
 	function injectLocationColumn(cfg) {
 		var table = document.querySelector('table.wp-list-table.pmcs-snippets');
@@ -351,5 +353,131 @@
 				return entry.codeTypes.indexOf(type) !== -1;
 			});
 		});
+	}
+
+	function injectBulkDuplicateButton(cfg) {
+		if (document.getElementById('sapfp-duplicate-selected')) {
+			return;
+		}
+
+		var bulkSelect = document.getElementById('bulk-action-selector-top');
+		var tablenav = bulkSelect ? bulkSelect.closest('.tablenav.top') : null;
+		if (!tablenav) {
+			return;
+		}
+
+		var button = document.createElement('button');
+		button.type = 'button';
+		button.className = 'button sapfp-bulk-duplicate-button';
+		button.id = 'sapfp-duplicate-selected';
+		button.textContent = cfg.strings.duplicateSelected || 'Duplicate Selected';
+		button.disabled = true;
+
+		var locationBar = document.querySelector('.sapfp-bulk-location-bar');
+		if (locationBar && locationBar.parentNode) {
+			locationBar.parentNode.insertBefore(button, locationBar.nextSibling);
+		} else {
+			var bulkActions = bulkSelect.closest('.alignleft.actions');
+			if (bulkActions && bulkActions.parentNode) {
+				bulkActions.parentNode.insertBefore(button, bulkActions.nextSibling);
+			} else {
+				tablenav.insertBefore(button, tablenav.firstChild);
+			}
+		}
+
+		var table = document.querySelector('table.wp-list-table.pmcs-snippets');
+
+		function refreshDuplicateButton() {
+			var checked = document.querySelectorAll('input[name="snippets[]"]:checked');
+			button.disabled = checked.length === 0;
+		}
+
+		if (table) {
+			table.addEventListener('change', function (event) {
+				var target = event.target;
+				if (
+					target.matches('input[name="snippets[]"]') ||
+					target.id === 'cb-select-all-1' ||
+					target.id === 'cb-select-all-2'
+				) {
+					refreshDuplicateButton();
+				}
+			});
+		}
+
+		refreshDuplicateButton();
+
+		button.addEventListener('click', function () {
+			var checked = document.querySelectorAll('input[name="snippets[]"]:checked');
+			if (!checked.length) {
+				window.alert(cfg.strings.selectSnippets);
+				return;
+			}
+
+			submitDuplicateForm(
+				Array.prototype.map.call(checked, function (checkbox) {
+					return checkbox.value;
+				})
+			);
+		});
+	}
+
+	function injectDuplicateRowActions(cfg) {
+		var table = document.querySelector('table.wp-list-table.pmcs-snippets');
+		if (!table || table.dataset.sapfpDuplicateActions === '1') {
+			return;
+		}
+
+		table.querySelectorAll('tbody tr').forEach(function (row) {
+			var checkbox = row.querySelector('input[name="snippets[]"]');
+			var rowActions = row.querySelector('.row-actions');
+			var exportAction = rowActions ? rowActions.querySelector('.export') : null;
+
+			if (!checkbox || !rowActions || !exportAction || rowActions.querySelector('.sapfp-duplicate-action')) {
+				return;
+			}
+
+			var duplicateAction = document.createElement('span');
+			duplicateAction.className = 'duplicate sapfp-duplicate-action';
+			duplicateAction.innerHTML =
+				' | <a href="#" class="sapfp-duplicate-one">' +
+				(cfg.strings.duplicate || 'Duplicate') +
+				'</a> ';
+
+			exportAction.insertAdjacentElement('afterend', duplicateAction);
+
+			var link = duplicateAction.querySelector('.sapfp-duplicate-one');
+			if (!link) {
+				return;
+			}
+
+			link.addEventListener('click', function (event) {
+				event.preventDefault();
+				submitDuplicateForm([checkbox.value]);
+			});
+		});
+
+		table.dataset.sapfpDuplicateActions = '1';
+	}
+
+	function submitDuplicateForm(fileNames) {
+		var form = document.getElementById('sapfp-bulk-duplicate-form');
+		var inputsContainer = document.getElementById('sapfp-duplicate-inputs');
+
+		if (!form || !inputsContainer || !fileNames.length) {
+			return;
+		}
+
+		inputsContainer.innerHTML = '';
+
+		fileNames.forEach(function (fileName) {
+			var input = document.createElement('input');
+			input.type = 'hidden';
+			input.name = 'snippets[]';
+			input.value = fileName;
+			inputsContainer.appendChild(input);
+		});
+
+		form.submit();
 	}
 })();
