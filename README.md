@@ -1,6 +1,6 @@
 # Snippet Admin Pro for Perfmatters
 
-Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code snippets, integrated into the Perfmatters **Code → Snippets** screen.
+Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code snippets — bulk location editing, a sortable Location column, and OR/AND condition logic — integrated into Perfmatters’ native **Code → Snippets** screens.
 
 ## Requirements
 
@@ -8,22 +8,33 @@ Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code sn
 - PHP 8.1+
 - Perfmatters (required for snippet management features)
 
+## Features
+
+- **Location column** — See where each snippet runs at a glance in the snippets list (sortable).
+- **Bulk location editing** — Change the run location for multiple snippets at once from the bulk actions bar.
+- **Condition logic (OR / AND)** — Control how Include rules, Exclude rules, and user conditions combine on the single-snippet editor.
+
 ## Usage
 
 1. Install and activate the plugin.
 2. Go to **Settings → Perfmatters → Code → Snippets**.
-3. Select snippets using Perfmatters’ checkboxes (same as bulk Activate/Delete).
-4. Use **Change Location To** in the bulk actions bar, pick a location, and click **Apply to Selected**.
 
-The location dropdown only shows options Perfmatters supports for the **selected snippet types** (same rules as the single-snippet editor). Select snippets first; mixed types show only locations valid for all selected types.
+### Snippets list — Location column
 
-The snippets table includes a **Location** column (after Type) showing where each snippet runs.
+The snippets table includes a **Location** column (after Type) showing where each snippet runs. Click the column header to sort by location.
 
 Supported locations match Perfmatters (e.g. Frontend Header, Frontend Footer, Admin Header, Admin Footer, plus PHP and HTML-specific options).
 
-### Condition Logic (OR / AND)
+### Snippets list — Bulk location editing
 
-On a single snippet editor screen (**Settings → Perfmatters → Code → Snippets → open a snippet**), a **Condition Logic** panel appears below Perfmatters’ Include / Exclude / Users sections:
+1. Select snippets using Perfmatters’ checkboxes (same as bulk Activate/Delete).
+2. Use **Change Location To** in the bulk actions bar, pick a location, and click **Apply to Selected**.
+
+The location dropdown only shows options Perfmatters supports for the **selected snippet types** (same rules as the single-snippet editor). Select snippets first; mixed types show only locations valid for all selected types.
+
+### Snippet editor — Condition logic (OR / AND)
+
+Open a snippet from **Settings → Perfmatters → Code → Snippets**. A **Condition Logic** panel appears below Perfmatters’ Include / Exclude / Users sections:
 
 | Setting | Default (Perfmatters-native) | Enhanced option |
 |--------|------------------------------|-----------------|
@@ -37,9 +48,9 @@ Logic settings are saved in the snippet’s `conditions` meta as a hidden `sapfp
 
 ## Persistence (safe to deactivate or uninstall)
 
-All snippet changes are written **directly into Perfmatters’ own snippet files** via `Perfmatters\PMCS\Snippet::update()`. Location and other metadata live in each snippet’s `.php` docblock — the same storage Perfmatters uses when you save a snippet manually.
+All snippet changes are written **directly into Perfmatters’ own snippet files** via `Perfmatters\PMCS\Snippet::update()`. Location, condition logic, and other metadata live in each snippet’s `.php` docblock — the same storage Perfmatters uses when you save a snippet manually.
 
-This plugin does **not** store snippet data in `wp_options`, custom tables, or separate files. If you deactivate or remove Snippet Admin Pro, your snippets and their locations remain exactly as Perfmatters left them.
+This plugin does **not** store snippet data in `wp_options`, custom tables, or separate files. If you deactivate or remove Snippet Admin Pro, your snippets and their settings remain exactly as Perfmatters left them.
 
 ## Changelog
 
