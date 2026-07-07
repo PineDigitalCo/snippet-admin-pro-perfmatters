@@ -1,0 +1,200 @@
+/**
+ * Condition logic panel — 3-column grid (label | OR | AND).
+ */
+
+#sapfp-condition-logic {
+	margin: 0 -20px 20px;
+	padding: 0 20px 20px;
+	border-bottom: 1px solid #f2f2f2;
+}
+
+#sapfp-condition-logic .sapfp-logic-header {
+	margin-bottom: 14px;
+}
+
+#sapfp-condition-logic .sapfp-logic-header h4 {
+	margin: 0 0 4px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #1d2327;
+}
+
+#sapfp-condition-logic .sapfp-logic-header p {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #646970;
+}
+
+#sapfp-condition-logic .sapfp-logic-grid {
+	display: grid;
+	grid-template-columns: minmax(148px, 200px) minmax(0, 1fr) minmax(0, 1fr);
+	gap: 8px 10px;
+	max-width: 560px;
+	padding: 14px 16px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+#sapfp-condition-logic .sapfp-logic-grid-head,
+#sapfp-condition-logic .sapfp-logic-grid-row {
+	display: contents;
+}
+
+#sapfp-condition-logic .sapfp-logic-grid-col {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 24px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #787c82;
+}
+
+#sapfp-condition-logic .sapfp-logic-grid-label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2px;
+	min-height: 40px;
+	padding-right: 8px;
+}
+
+#sapfp-condition-logic .sapfp-logic-row-title {
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.35;
+	color: #1d2327;
+}
+
+#sapfp-condition-logic .sapfp-logic-row-hint {
+	font-size: 12px;
+	line-height: 1.35;
+	color: #787c82;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	margin: 0;
+	padding: 8px 10px;
+	border: 1px solid #c3c4c7;
+	border-radius: 6px;
+	background: #f6f7f7;
+	cursor: pointer;
+	transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+	user-select: none;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile:hover {
+	border-color: #8c8f94;
+	background: #fff;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile input[type="radio"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile-text {
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.3;
+	color: #50575e;
+	text-align: center;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile input[type="radio"]:focus-visible + .sapfp-logic-tile-text {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+#sapfp-condition-logic .sapfp-logic-tile:has(input[type="radio"]:checked) {
+	border-color: #2271b1;
+	background: #2271b1;
+	box-shadow: 0 1px 2px rgba(34, 113, 177, 0.28);
+}
+
+#sapfp-condition-logic .sapfp-logic-tile:has(input[type="radio"]:checked) .sapfp-logic-tile-text {
+	color: #fff;
+	font-weight: 600;
+}
+
+/* Include-row OR/AND badges between condition rows */
+.sapfp-condition-row-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 2px 0 6px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.sapfp-condition-row-badge::before,
+.sapfp-condition-row-badge::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: #dcdcde;
+}
+
+.sapfp-condition-row-badge::before {
+	margin-right: 10px;
+}
+
+.sapfp-condition-row-badge::after {
+	margin-left: 10px;
+}
+
+.sapfp-condition-row-badge.is-and {
+	color: #9a6700;
+}
+
+.condition.sapfp-sentinel-row {
+	display: none !important;
+}
+
+@media (max-width: 782px) {
+	#sapfp-condition-logic .sapfp-logic-grid {
+		grid-template-columns: 1fr 1fr;
+		max-width: none;
+	}
+
+	#sapfp-condition-logic .sapfp-logic-grid-head .sapfp-logic-grid-label {
+		display: none;
+	}
+
+	#sapfp-condition-logic .sapfp-logic-grid-label {
+		grid-column: 1 / -1;
+		min-height: auto;
+		padding: 4px 0 0;
+	}
+
+	#sapfp-condition-logic .sapfp-logic-grid-head .sapfp-logic-grid-col:first-of-type {
+		grid-column: 1;
+	}
+
+	#sapfp-condition-logic .sapfp-logic-grid-head .sapfp-logic-grid-col:last-of-type {
+		grid-column: 2;
+	}
+}

@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Run lint
+        run: composer lint
+
+      - name: Run tests
+        run: composer test
+
+      - name: Build distribution zip
+        run: composer run dist-zip
+
+      - name: Resolve version
+        id: version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          zip_path="dist/snippet-admin-pro-for-perfmatters-${version}.zip"
+          if [[ ! -f "${zip_path}" ]]; then
+            echo "Missing ${zip_path}" >&2
+            exit 1
+          fi
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "zip_path=${zip_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Snippet Admin Pro for Perfmatters ${{ steps.version.outputs.version }}"
+          files: ${{ steps.version.outputs.zip_path }}
+          generate_release_notes: true

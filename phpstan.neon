@@ -1,0 +1,15 @@
+parameters:
+  level: 6
+  paths:
+    - snippet-admin-pro-for-perfmatters.php
+    - src
+  treatPhpDocTypesAsCertain: false
+  bootstrapFiles:
+    - phpstan-bootstrap.php
+    - phpstan-stubs/perfmatters-pmcs.php
+  excludePaths:
+    analyse:
+      - vendor
+      - tests
+      - phpstan-stubs
+      - src/Compat/NativeConditions.php

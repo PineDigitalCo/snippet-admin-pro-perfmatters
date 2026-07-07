@@ -1,0 +1,33 @@
+# Files excluded when building an install/distribution ZIP.
+# Canonical build: `composer run dist-zip` or `bin/build-dist-zip.sh` (reads this file via rsync --exclude-from).
+
+/bin/
+
+/node_modules/
+/vendor/
+
+.git
+.gitignore
+.github/
+
+composer.json
+composer.lock
+
+phpcs.xml.dist
+phpcs.wordpress.xml.dist
+phpstan.neon
+phpstan-baseline.neon
+phpstan-bootstrap.php
+phpstan-stubs/
+
+phpunit.xml.dist
+tests/
+
+.vscode/
+.cursor/
+
+.DS_Store
+
+.distignore
+dist/
+*.zip
