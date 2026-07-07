@@ -19,20 +19,20 @@ Enhanced admin tools for managing [Perfmatters](https://perfmatters.io/) code sn
 1. Install and activate the plugin.
 2. Go to **Settings → Perfmatters → Code → Snippets**.
 
-### Snippets list — Location column
+### Snippets List — Location Column
 
 The snippets table includes a **Location** column (after Type) showing where each snippet runs. Click the column header to sort by location.
 
 Supported locations match Perfmatters (e.g. Frontend Header, Frontend Footer, Admin Header, Admin Footer, plus PHP and HTML-specific options).
 
-### Snippets list — Bulk location editing
+### Snippets List — Bulk Location Editing
 
 1. Select snippets using Perfmatters’ checkboxes (same as bulk Activate/Delete).
 2. Use **Change Location To** in the bulk actions bar, pick a location, and click **Apply to Selected**.
 
 The location dropdown only shows options Perfmatters supports for the **selected snippet types** (same rules as the single-snippet editor). Select snippets first; mixed types show only locations valid for all selected types.
 
-### Snippet editor — Condition logic (OR / AND)
+### Snippet Editor — Condition Logic (OR / AND)
 
 Open a snippet from **Settings → Perfmatters → Code → Snippets**. A **Condition Logic** panel appears below Perfmatters’ Include / Exclude / Users sections:
 
@@ -46,7 +46,7 @@ Logic settings are saved in the snippet’s `conditions` meta as a hidden `sapfp
 
 **Note:** Custom logic is **evaluated while Snippet Admin Pro is active** (runtime shim). With the plugin off, Perfmatters falls back to its built-in rules (include rows are OR; all sections are AND). Reset logic to defaults before deactivating if you rely on non-default behavior.
 
-## Persistence (safe to deactivate or uninstall)
+## Persistence (Safe to Deactivate or Uninstall)
 
 All snippet changes are written **directly into Perfmatters’ own snippet files** via `Perfmatters\PMCS\Snippet::update()`. Location, condition logic, and other metadata live in each snippet’s `.php` docblock — the same storage Perfmatters uses when you save a snippet manually.
 
@@ -82,7 +82,7 @@ GPL-2.0-or-later
 - This plugin is 100% vibe-coded, and the code has not been reviewed.
 - Coding standards have been followed with effort and to the best of my ability.
 
-## Coding standards
+## Coding Standards
 - PHPCS enforces WordPress Coding Standards unless the project documents exceptions.
 - Use clear names, small focused classes/functions, and consistent file organization.
 - Document public APIs, hooks, filters, and non-obvious behavior.
@@ -109,7 +109,7 @@ GPL-2.0-or-later
 - Prefer explicit configuration and migration paths over implicit side effects.
 - Document extension points for other developers.
 
-### Pull requests
+### Pull Requests
 - Branch from the default branch.
 - Run composer lint locally — fix any PHPCS or PHPStan failures.
 - Keep changes focused and describe behavior changes clearly.
