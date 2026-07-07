@@ -23,7 +23,18 @@ if [[ ! -f "${bootstrap}" ]]; then
 fi
 
 if [[ ! -f "${bootstrap}" ]]; then
-	echo "Could not find plugin bootstrap (expected ${plugin_slug}.php or plugin.php)" >&2
+	# GitHub Actions checks out into the repo directory name, which may differ from the WordPress plugin slug.
+	while IFS= read -r candidate; do
+		if grep -q 'Plugin Name:' "${candidate}" 2>/dev/null; then
+			bootstrap="${candidate}"
+			plugin_slug="$(basename "${candidate}" .php)"
+			break
+		fi
+	done < <(find "${plugin_root}" -maxdepth 1 -type f -name '*.php' ! -name 'index.php' | sort)
+fi
+
+if [[ ! -f "${bootstrap}" ]]; then
+	echo "Could not find plugin bootstrap (expected ${plugin_slug}.php, plugin.php, or a top-level PHP file with a Plugin Name header)" >&2
 	exit 1
 fi
 

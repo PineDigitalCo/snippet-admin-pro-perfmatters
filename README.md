@@ -67,6 +67,51 @@ GPL-2.0-or-later
 - *Use at Your Own Risk:* All software, plugins, themes, code snippets, and tools provided or recommended are offered "as is" without any warranties, express or implied. You assume full responsibility for any risks associated with downloading, installing, configuring, or using the software.
 - *Limitation of Liability:* In no event shall we (or any contributors, affiliates, or licensors) be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to loss of data, business interruption, or any other losses arising from your use (or inability to use) the software, even if advised of the possibility of such damages.
 
-## Affiliate Disclaimer
+## AI Disclaimer
+- This plugin is 100% vibe-coded, and the code has not been reviewed.
+- Coding standards have been followed with effort and to the best of my ability.
 
+## Coding standards
+- PHPCS enforces WordPress Coding Standards unless the project documents exceptions.
+- Use clear names, small focused classes/functions, and consistent file organization.
+- Document public APIs, hooks, filters, and non-obvious behavior.
+- Keep user-facing strings translatable.
+
+### Security
+- Check user capabilities before privileged actions.
+- Verify nonces (or equivalent) on requests that change state.
+- Sanitize input; escape output.
+- Use prepared statements for dynamic database queries.
+- Validate structured data (JSON, settings arrays, file uploads) before storing or acting on it.
+- Avoid exposing sensitive data in AJAX responses, logs, or client-side scripts.
+
+### Performance
+- Load assets only where they are needed.
+- Avoid global admin or frontend hooks that affect unrelated screens.
+- Scope CSS and JavaScript to the plugin’s own markup/containers.
+- Register features conditionally when they are disabled or not in context.
+- Be deliberate about database queries, caching, and third-party library loading.
+
+### Architecture
+- Extend WordPress and other plugins through hooks and filters — avoid editing vendor or core code.
+- Keep features modular and loosely coupled where possible.
+- Prefer explicit configuration and migration paths over implicit side effects.
+- Document extension points for other developers.
+
+### Pull requests
+- Branch from the default branch.
+- Run composer lint locally — fix any PHPCS or PHPStan failures.
+- Keep changes focused and describe behavior changes clearly.
+- Include manual test steps for anything user-facing (admin, frontend, AJAX, REST).
+- Call out security, performance, or breaking-change impact in the PR description.
+
+### Releases
+Follow the project’s documented release process. In general:
+
+- PHPCS and PHPStan pass.
+- Version numbers are updated consistently.
+- Distribution packages exclude dev-only files and tooling.
+- Changes are tagged and documented.
+
+## Affiliate Disclaimer
 - This plugin is not affiliated with, endorsed by, or officially connected to the Perfmatters team in any way. Perfmatters is a trademark of its respective owner.
